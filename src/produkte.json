@@ -1,0 +1,7 @@
+[
+  { "name": "Cheeseburger", "preis": 4.5 },
+  { "name": "Pommes", "preis": 2.0 },
+  { "name": "Currywurst", "preis": 3.0 },
+  { "name": "Cola", "preis": 1.5 },
+  { "name": "Salat", "preis": 3.5 }
+]
