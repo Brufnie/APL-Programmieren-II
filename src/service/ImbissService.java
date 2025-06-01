@@ -34,13 +34,6 @@ public class ImbissService {
         System.out.println("\nBestellung aufgenommen: \n" + bestellung);
     }
 
-    public void zeigeBestellungen() {
-        for (Bestellung b : bestellungen) {
-            System.out.println(b);
-            System.out.println("---------------------");
-        }
-    }
-
     public List<Bestellung> getBestellungen() {
         return bestellungen;
     }
