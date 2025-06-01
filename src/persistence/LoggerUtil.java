@@ -2,13 +2,12 @@ package persistence;
 
 import model.Bestellung;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class LoggerUtil {
-    private static final String LOG_DATEI = "bestellungen.log";
+    private static final String LOG_DATEI = "src/bestellungen.log";
 
     public static void loggeBestellung(Bestellung bestellung) {
         try {
@@ -31,6 +30,22 @@ public class LoggerUtil {
             }
         } catch (IOException e) {
             System.err.println("Fehler beim Schreiben in die Logdatei: " + e.getMessage());
+        }
+    }
+
+    public static void zeigeLog() {
+        File file = new File(LOG_DATEI);
+        if (!file.exists()) {
+            System.out.println("Keine Logdatei vorhanden.");
+            return;
+        }
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Fehler beim Lesen der Logdatei: " + e.getMessage());
         }
     }
 }

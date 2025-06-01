@@ -2,6 +2,7 @@ package view;
 
 import model.*;
 import persistence.JsonHandler;
+import persistence.LoggerUtil;
 import service.ImbissService;
 
 import java.io.IOException;
@@ -19,8 +20,7 @@ public class Menu {
                 System.out.println("\n--- IMBISS-VERWALTUNG ---");
                 System.out.println("1. Speisekarte anzeigen");
                 System.out.println("2. Bestellung aufnehmen");
-                System.out.println("3. Bestellungen anzeigen");
-                System.out.println("4. Bestellstatus ändern (passwortgeschützt)");
+                System.out.println("3. Bestellungen anzeigen (aus Log-Datei)");
                 System.out.println("0. Beenden");
                 System.out.print("> ");
                 String eingabe = scanner.nextLine();
@@ -28,8 +28,7 @@ public class Menu {
                 switch (eingabe) {
                     case "1" -> service.zeigeSpeisekarte();
                     case "2" -> bestellungAufnehmen(service);
-                    case "3" -> service.zeigeBestellungen();
-                    case "4" -> statusÄndern(service);
+                    case "3" -> LoggerUtil.zeigeLog();
                     case "0" -> {
                         System.out.println("Programm beendet.");
                         return;
@@ -60,47 +59,6 @@ public class Menu {
                 auswahl.add(Integer.parseInt(e.trim()) - 1);
             }
             service.bestellungAufnehmen(kunde, auswahl);
-        } catch (NumberFormatException e) {
-            System.out.println("Ungültige Eingabe.");
-        }
-    }
-
-    private void statusÄndern(ImbissService service) {
-        try {
-            System.out.print("Admin-Passwort: ");
-            String eingabePasswort = scanner.nextLine();
-            String echtesPasswort = JsonHandler.ladePasswort();
-
-            if (!eingabePasswort.equals(echtesPasswort)) {
-                System.out.println("Falsches Passwort. Zugriff verweigert.");
-                return;
-            }
-
-            System.out.print("Bestellnummer: ");
-            int nr = Integer.parseInt(scanner.nextLine());
-
-            System.out.println("Neuer Status: (1) OFFEN, (2) IN_BEARBEITUNG, (3) ABGESCHLOSSEN");
-            int s = Integer.parseInt(scanner.nextLine());
-
-            Status neuerStatus = switch (s) {
-                case 1 -> Status.OFFEN;
-                case 2 -> Status.IN_BEARBEITUNG;
-                case 3 -> Status.ABGESCHLOSSEN;
-                default -> null;
-            };
-
-            for (Bestellung b : service.getBestellungen()) {
-                if (b.getBestellNr() == nr && neuerStatus != null) {
-                    b.setStatus(neuerStatus);
-                    System.out.println("Status erfolgreich geändert.");
-                    return;
-                }
-            }
-
-            System.out.println("Bestellung nicht gefunden oder ungültiger Status.");
-
-        } catch (IOException e) {
-            System.out.println("Fehler beim Laden des Passworts: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Ungültige Eingabe.");
         }
