@@ -12,8 +12,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class JsonHandler {
-    private static final String PRODUKT_DATEI = "produkte.json";
-    private static final String PASSWORT_DATEI = "passwort.json";
+    private static final String PRODUKT_DATEI = "src/produkte.json";
+    private static final String PASSWORT_DATEI = "src/passwort.json";
     private static final Gson gson = new Gson();
 
     public static List<Produkt> ladeProdukte() throws IOException {
