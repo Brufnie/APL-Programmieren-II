@@ -30,3 +30,5 @@ bin/
 
 .idea
 APL.iml
+APL-Programmieren-II.iml
+/.gitignore
