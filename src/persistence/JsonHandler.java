@@ -19,7 +19,7 @@ public class JsonHandler {
     public static List<Produkt> ladeProdukte() throws IOException {
         File file = new File(PRODUKT_DATEI);
         if (!file.exists()) {
-            throw new FileNotFoundException("Die Datei '" + PRODUKT_DATEI + "' wurde nicht gefunden. Bitte legen Sie sie im Projektverzeichnis ab.");
+            throw new FileNotFoundException("Die Datei '" + PRODUKT_DATEI + "' wurde nicht gefunden.");
         }
 
         try (FileReader reader = new FileReader(file)) {
@@ -38,9 +38,4 @@ public class JsonHandler {
         }
     }
 
-    public static void speichereProdukte(List<Produkt> produkte) throws IOException {
-        try (java.io.FileWriter writer = new java.io.FileWriter(PRODUKT_DATEI)) {
-            gson.toJson(produkte, writer);
-        }
-    }
 }

@@ -3,10 +3,12 @@ package model;
 public class Produkt {
     private String name;
     private double preis;
+    private String produktart;
 
-    public Produkt(String name, double preis) {
+    public Produkt(String name, double preis, String produktart) {
         this.name = name;
         this.preis = preis;
+        this.produktart = produktart;
     }
 
     public String getName() { return name; }

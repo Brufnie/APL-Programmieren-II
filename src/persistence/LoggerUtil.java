@@ -13,7 +13,7 @@ public class LoggerUtil {
         try {
             File logDatei = new File(LOG_DATEI);
             if (!logDatei.exists()) {
-                logDatei.createNewFile();
+                throw new FileNotFoundException("Die Datei '" + LOG_DATEI + "' wurde nicht gefunden.");
             }
 
             try (FileWriter writer = new FileWriter(logDatei, true)) {
@@ -26,7 +26,8 @@ public class LoggerUtil {
                         // ignore
                     }
                 });
-                writer.write("Gesamt: " + bestellung.berechneGesamtpreis() + " EUR\n\n");
+                writer.write("Gesamt: " + bestellung.berechneGesamtpreis() + " EUR\n");
+                writer.write("Zustand:" + bestellung.getStatus() + "\n\n");
             }
         } catch (IOException e) {
             System.err.println("Fehler beim Schreiben in die Logdatei: " + e.getMessage());

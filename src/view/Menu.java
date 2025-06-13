@@ -30,9 +30,10 @@ public class Menu {
                     case "1" -> service.zeigeSpeisekarte();
                     case "2" -> bestellungAufnehmen(service);
                     case "3" -> LoggerUtil.zeigeLog();
-                    case "4" -> statusÄndern(service);
+                    case "4" -> statusAendern(service);
                     case "0" -> {
                         System.out.println("Programm beendet.");
+                        scanner.close();
                         return;
                     }
                     default -> System.out.println("Ungültige Eingabe.");
@@ -53,20 +54,24 @@ public class Menu {
         List<Integer> auswahl = new ArrayList<>();
 
         service.zeigeSpeisekarte();
-        System.out.println("Produktnummern durch Komma getrennt (z. B. 1,3): ");
+        System.out.println("Produktnummern durch Komma getrennt (z.B. 1,3,5): ");
         String[] eingaben = scanner.nextLine().split(",");
+        //split: Teilt den eingelesenen String an den Kommas auf
 
         try {
             for (String e : eingaben) {
                 auswahl.add(Integer.parseInt(e.trim()) - 1);
+                //Wandelt String in Integer um, entfernt Leerzeichen und Zahl wird -1 subtrahiert
+                //aufgrund von Listen
             }
             service.bestellungAufnehmen(kunde, auswahl);
+
         } catch (NumberFormatException e) {
             System.out.println("Ungültige Eingabe.");
         }
     }
 
-    private void statusÄndern(ImbissService service) {
+    private void statusAendern(ImbissService service) {
         try {
             System.out.print("Admin-Passwort: ");
             String eingabePasswort = scanner.nextLine();
@@ -79,10 +84,11 @@ public class Menu {
 
             System.out.print("Bestellnummer: ");
             int nr = Integer.parseInt(scanner.nextLine());
+            //Zeile aus Terminal wird in Integer versucht umzuwandeln
+            //->NumberFormatException
 
             System.out.println("Neuer Status: (1) OFFEN, (2) IN_BEARBEITUNG, (3) ABGESCHLOSSEN");
             int s = Integer.parseInt(scanner.nextLine());
-
             Status neuerStatus = switch (s) {
                 case 1 -> Status.OFFEN;
                 case 2 -> Status.IN_BEARBEITUNG;
@@ -90,20 +96,25 @@ public class Menu {
                 default -> null;
             };
 
+
+            //sucht aktuelle Bestellnr in allen Bestellungen
             for (Bestellung b : service.getBestellungen()) {
+
                 if (b.getBestellNr() == nr && neuerStatus != null) {
                     b.setStatus(neuerStatus);
+                    LoggerUtil.loggeBestellung(b);
                     System.out.println("Status erfolgreich geändert.");
                     return;
                 }
             }
 
-            System.out.println("Bestellung nicht gefunden oder ungültiger Status.");
+            System.out.println("Bestellung nicht gefunden oder ungültiger Status.(null)");
 
         } catch (IOException e) {
             System.out.println("Fehler beim Laden des Passworts: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Ungültige Eingabe.");
         }
+
     }
 }

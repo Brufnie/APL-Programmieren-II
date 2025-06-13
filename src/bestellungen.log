@@ -1,17 +1,8 @@
-[2025-06-01 04:21:00] Bestellung #1, Kunde: sd (sd)
+[2025-06-13 19:30:34] Bestellung #1, Kunde: Test (Teststraße 29)
  - Cheeseburger - 4.5 EUR
- - Pommes - 2.0 EUR
+ - Cola - 1.5 EUR
  - Currywurst - 3.0 EUR
-Gesamt: 9.5 EUR
-
-[2025-06-01 15:15:36] Bestellung #1, Kunde: Maren (Offenbacher Str)
  - Pommes - 2.0 EUR
- - Cola - 1.5 EUR
-Gesamt: 3.5 EUR
-
-[2025-06-02 09:38:41] Bestellung #1, Kunde: sd (sds)
- - Cheeseburger - 4.5 EUR
- - Cola - 1.5 EUR
- - Salat - 3.5 EUR
-Gesamt: 9.5 EUR
+Gesamt: 11.0 EUR
+Zustand:OFFEN
 
